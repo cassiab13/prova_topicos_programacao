@@ -54,8 +54,10 @@ public class SecurityConfig {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/tasks/**").hasAnyAuthority("USER", "ADMIN")
-                        .requestMatchers("/users/**").permitAll()
+                        .requestMatchers("/users").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/users/update-role").hasAuthority("ADMIN")
+                        .requestMatchers("/users/update-password").hasAuthority("ADMIN")
+
                 )
                 .exceptionHandling(e -> e.authenticationEntryPoint(new RestAuthenticationEntryPoint()))
                 .authenticationProvider(authenticationProvider())
